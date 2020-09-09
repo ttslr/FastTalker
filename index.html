@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta name="google-site-verification" content="ftFOlJETX-2KNjaPh8W6s8lhigItRuu9fOmjHZZ0nY0" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <title>FastTalker</title>
+</head>
+<style type="text/css">
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  audio {
+    width: 100%;
+  }
+
+  thead>tr>th:first-child {
+    width: 96px;
+  }
+
+  @media (max-width: 767px) {
+    .big-screen {
+      display: none;
+    }
+  }
+
+  @media (min-width: 767px) {
+    .small-screen {
+      display: none;
+    }
+  }
+</style>
+
+
+
+
+<body>
+  <header class="header">
+    <div class="jumbotron bg-secondary text-center">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+ 
+            <h1><a class="text-light">FastTalker: A Neural Text-to-Speech Architecture <br>with Shallow andGroup Autoregression</h1><br> 
+             <font size=5><span style="color:#000000"> Authors: Rui Liu, Berrak Sisman, Yixing Lin, Haizhou Li </font>  </a>   
+            <p>
+              <div class="row">
+              </div>
+            </p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div class="row" id="result">
+        <div class="col-md-12">
+        	<h5>Abstract:</h5> 
+        	Non-autoregressive architecture for neural text-to-speech (TTS) allows for parallel implementation, thus reduces inference time over its autoregressive counterpart. However, such system architecture doesn’t explicitly model temporal dependency of acoustic signal as it generates individual acousticframes independently. The lack of temporal modeling often adversely impacts speech continuity, thus voice quality. In this paper, we propose a novel neural TTS model that is denoted as <i>FastTalker</i>. We study two novel strategies for high-quality speech synthesis at low computational cost. First, we propose a shallow autoregression mechanism that separate TTS decoding into two steps, i.e. a non-autoregressive context decoder followed by an autoregressive acoustic decoder, to minimize the autoregressive computation. Second, we propose the use of group autoregression, where the acoustic decoder generates acoustic features as a sequence of groups instead of frames, each group having multiple consecutive frames. Within a group, the acoustic features are generated in parallel. With shallow and group autoregression, <i>FastTalker</i> significantly reduces inference time, at the sametime, generates smooth and natural speech. Experiments show that, in terms of voice quality and naturalness, <i>FastTalker</i> outperforms all reference baselines, such as Tacotron2, Transformer TTS, and FastSpeech, which are known as the state-of-the-art in TTS. Moreover, <i>FastTalker</i> also runs at half of the inference time of autoregressive Transformer TTS, yet with superior voice quality.<br>
+<br>
+<br>
+          <div style="text-align: center; width: 1100px; border: green solid 1px;">
+          	<img align="center" src="model.png"  width="500" height="600"  />
+ 				<br>
+                    Figure1: The proposed <i>FastTalker</i>  consists of Encoder (left panel) and FastDecoder (right panel). The FastDecoder contains a non-autoregressive context decoder (in blue) followed by a group autoregressive acoustic decoder layer (in green).
+                    
+          </div>
+			<br><br><br>
+
+          
+                     <br>
+                   
+                  <div class="big-screen">
+                    <br>
+                    <h5>We develop 3 competitive baselines that are:</h5>
+                    <b> 1) Tacotron2</b> <font color='blue'>[1]</font><br>
+                    <b> 2) Transformer TTS</b> <font color='blue'>[2]</font><br>
+                    <b> 3) FastSpeech</b> <font color='blue'>[3]</font><br>
+                    
+                  
+  
+                   
+                     <br /><br />
+                     <h3>Speech Samples:</h3>
+                     <br />
+                     <br />
+                    <!--  Naturalness Evaluation -->
+                    <table class="table">
+                      
+                      <tbody>
+                                
+                                
+                                <tr>
+                                    <th></th>
+                                    <th style="text-align:center;">   Ground Truth</th>
+                                    <th style="text-align:center;">   Tacotron2</th>
+                                    <th style="text-align:center;">   Transformer TTS</th>
+                                    <th style="text-align:center;">   FastSpeech</th>
+                                    <th style="text-align:center;">   FastTalker</th>
+                          
+                                </tr>
+                                 
+                               <!-- single sentence -->
+                               <!--
+                                <tr>
+                                  <th colspan=5 align="left"> [1] xxxxxxxxx</th>
+
+                                </tr> -->
+                                
+
+
+                                 <tr>
+                                  <th scope="row">  [1]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0036_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0036_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0036_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0036_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0036_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                  <tr>
+                                  <th scope="row">  [2]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0043_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0043_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0043_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0043_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0043_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                  <tr>
+                                  <th scope="row">  [3]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0053_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0053_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0053_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0053_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0053_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+
+
+                                  <tr>
+                                  <th scope="row">  [4]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0060_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0060_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0060_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0060_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0060_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+
+
+
+                                  <tr>
+                                  <th scope="row">  [5]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0066_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0066_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0066_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0066_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0066_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                   
+
+                                  <tr>
+                                  <th scope="row">  [6]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0076_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0076_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0076_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0076_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0076_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                 
+                                  <tr>
+                                  <th scope="row">  [7]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0081_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0081_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0081_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0081_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0081_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                  <tr>
+                                  <th scope="row">  [8]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0091_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0091_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0091_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0091_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0091_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                  <tr>
+                                  <th scope="row">  [9]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0098_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0098_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0098_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0098_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0098_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                  <tr>
+                                  <th scope="row">  [10]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0108_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0108_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0108_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0108_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0108_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                  <tr>
+                                  <th scope="row">  [11]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0114_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0114_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0114_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0114_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0114_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                  <tr>
+                                  <th scope="row">  [12]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0121_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0121_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0121_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0121_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0121_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                  <tr>
+                                  
+
+                                  <tr>
+                                  <th scope="row">  [13]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0128_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0128_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0128_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0128_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0128_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                  <tr>
+                                  <th scope="row">  [14]  </th>
+                                <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0139_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0139_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0139_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0139_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0139_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                  <tr>
+                                  <th scope="row">  [15]  </th>
+                                 <td>
+                                    <audio controls>
+                                      <source src="samples/1-GT/LJ050-0144_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/2-Taco/LJ050-0144_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/3-TT/LJ050-0144_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/4-FS/LJ050-0144_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  <td>
+                                    <audio controls>
+                                      <source src="samples/5-FT/LJ050-0144_gen.wav" type="audio/wav" />
+                                      Your browser does not support the audio element.
+                                    </audio>
+                                  </td>
+                                  
+                                  </tr>
+
+                                
+ 
+
+                      </tbody>
+                    </table>
+ 
+
+                  </div>
+                 
+        </div>
+      </div>
+      <hr>
+       <div class="row" id="ref">
+        <div class="col">
+          <h5>References</h5>
+          [1] Jonathan Shen, Ruoming Pang, Ron J Weiss, Mike Schuster, Navdeep Jaitly,Zongheng Yang, Zhifeng Chen, Yu Zhang, Yuxuan Wang, Rj Skerrv-Ryan, et al.  Natural TTS synthesis by conditioning wavenet on melspectrogram predictions.  In ICASSP 2018, pages 4779–4783.
+          <br>
+          [2] Naihan Li, Shujie Liu, Yanqing Liu, Sheng Zhao, and Ming Liu. Neuralspeech synthesis with transformer network. In AAAI 2019, pages 6706–6713.
+          <br>
+          [3] Yi Ren, Yangjun Ruan, Xu Tan, Tao Qin, Sheng Zhao, Zhou Zhao, andTie-Yan Liu. Fastspeech: Fast, robust and controllable text to speech. In NeuIPS 2019, pages 3171–3180.
+        
+        </div>
+      </div>
+      <!--<hr>
+      <div class="row" id="contact">
+          <div class="col">
+            <h2>Contact</h2>
+            <div></div>
+          </div>
+        </div> -->
+    </div>
+  </main>
+  <footer class="bg-secondary text-light mt-4 pt-3 pb-2 ">
+    <div class="container">
+      <p class="text-center">
+        
+      </p>
+    </div>
+  </footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
