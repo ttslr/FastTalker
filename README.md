@@ -1,5 +1,5 @@
-# Fast-Talker
-[Fast-Talker: A Neural Text-to-Speech Architecture with Shallow and Group Autoregression](https://www.sciencedirect.com/science/article/pii/S0893608021001532)
+# FastTalker
+[FastTalker: A Neural Text-to-Speech Architecture with Shallow and Group Autoregression](https://www.sciencedirect.com/science/article/pii/S0893608021001532)
 
 Authors: Rui Liu, Berrak Sisman, Yixing Lin, Haizhou Li
 
